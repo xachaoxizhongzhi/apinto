@@ -31,6 +31,7 @@ import (
 	rsa_filter "github.com/eolinker/apinto/drivers/plugins/rsa-filter"
 	script_handler "github.com/eolinker/apinto/drivers/plugins/script-handler"
 	data_mask "github.com/eolinker/apinto/drivers/plugins/strategy/data-mask"
+	user_permissions "github.com/eolinker/apinto/drivers/plugins/user-permissions"
 
 	access_log "github.com/eolinker/apinto/drivers/plugins/access-log"
 	body_check "github.com/eolinker/apinto/drivers/plugins/body-check"
@@ -41,6 +42,7 @@ import (
 	grpc_to_http "github.com/eolinker/apinto/drivers/plugins/gRPC-to-http"
 	http_to_dubbo2 "github.com/eolinker/apinto/drivers/plugins/http-to-dubbo2"
 	http_to_grpc "github.com/eolinker/apinto/drivers/plugins/http-to-gRPC"
+	http_to_kitex "github.com/eolinker/apinto/drivers/plugins/http-to-kitex"
 	"github.com/eolinker/apinto/drivers/plugins/http_mocking"
 	ip_restriction "github.com/eolinker/apinto/drivers/plugins/ip-restriction"
 	"github.com/eolinker/apinto/drivers/plugins/monitor"
@@ -50,6 +52,7 @@ import (
 	"github.com/eolinker/apinto/drivers/plugins/proxy_rewrite_v2"
 	rate_limiting "github.com/eolinker/apinto/drivers/plugins/rate-limiting"
 	response_rewrite "github.com/eolinker/apinto/drivers/plugins/response-rewrite"
+	response_wrap "github.com/eolinker/apinto/drivers/plugins/response-wrap"
 	"github.com/eolinker/apinto/drivers/plugins/strategy/cache"
 	"github.com/eolinker/apinto/drivers/plugins/strategy/fuse"
 	"github.com/eolinker/apinto/drivers/plugins/strategy/grey"
@@ -72,6 +75,7 @@ func pluginRegister(extenderRegister eosc.IExtenderDriverRegister) {
 	// Dubbo协议相关插件
 	dubbo2_proxy_rewrite.Register(extenderRegister)
 	http_to_dubbo2.Register(extenderRegister)
+	http_to_kitex.Register(extenderRegister)
 	dubbo2_to_http.Register(extenderRegister)
 
 	// gRPC协议相关插件
@@ -89,11 +93,13 @@ func pluginRegister(extenderRegister eosc.IExtenderDriverRegister) {
 	http_mocking.Register(extenderRegister)
 	params_check.Register(extenderRegister)
 	params_check_v2.Register(extenderRegister)
+	user_permissions.Register(extenderRegister)
 	data_transform.Register(extenderRegister)
 	request_interception.Register(extenderRegister)
 	request_file_parse.Register(extenderRegister)
 
 	// 响应处理插件
+	response_wrap.Register(extenderRegister)
 	response_rewrite.Register(extenderRegister)
 	response_rewrite_v2.Register(extenderRegister)
 	response_filter.Register(extenderRegister)

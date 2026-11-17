@@ -36,6 +36,7 @@ import (
 	visit_strategy "github.com/eolinker/apinto/drivers/strategy/visit-strategy"
 	"github.com/eolinker/apinto/drivers/template"
 	protocbuf "github.com/eolinker/apinto/drivers/transcode/protobuf"
+	thrift "github.com/eolinker/apinto/drivers/transcode/thrift"
 
 	"github.com/eolinker/apinto/drivers/app"
 	"github.com/eolinker/apinto/drivers/output/prometheus"
@@ -89,6 +90,7 @@ func driverRegister(extenderRegister eosc.IExtenderDriverRegister) {
 
 	// 编码器
 	protocbuf.Register(extenderRegister)
+	thrift.Register(extenderRegister)
 
 	// 证书
 	certs.Register(extenderRegister)

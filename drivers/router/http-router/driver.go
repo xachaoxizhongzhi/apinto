@@ -1,7 +1,9 @@
 package http_router
 
 import (
+	"encoding/json"
 	"fmt"
+	"reflect"
 	"sync"
 
 	"github.com/eolinker/eosc/log"
@@ -25,6 +27,35 @@ func Check(v *Config, workers map[eosc.RequireId]eosc.IWorker) error {
 	_, _, _, err := check(v, workers)
 	if err != nil {
 		return err
+	}
+	for name, p := range v.Plugins {
+		if p == nil || p.Disable {
+			continue
+		}
+		typ, ok := pluginManager.GetConfigType(name)
+		if !ok {
+			continue
+		}
+		if typ.Kind() == reflect.Ptr {
+			typ = typ.Elem()
+		}
+		conf := reflect.New(typ).Interface()
+		checker, ok := conf.(interface {
+			CheckResources(map[eosc.RequireId]eosc.IWorker) error
+		})
+		if !ok {
+			continue
+		}
+		raw, err := json.Marshal(p.Config)
+		if err != nil {
+			return err
+		}
+		if err = json.Unmarshal(raw, conf); err != nil {
+			return err
+		}
+		if err = checker.CheckResources(workers); err != nil {
+			return fmt.Errorf("plugin %s: %w", name, err)
+		}
 	}
 	return nil
 }

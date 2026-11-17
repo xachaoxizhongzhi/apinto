@@ -29,3 +29,6 @@
 /.roo/
 /.trae/
 /skills/
+
+# Local development configuration, data, logs and backups
+/.local/

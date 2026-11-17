@@ -26,6 +26,8 @@ type Config struct {
 	Retry   int               `json:"retry" label:"重试次数" yaml:"retry" switch:"service!==''"`
 	TimeOut int               `json:"time_out" label:"超时时间" switch:"service!==''"`
 	Labels  map[string]string `json:"labels" label:"路由标签"`
+
+	Contracts []eosc.RequireId `json:"contracts,omitempty" yaml:"contracts,omitempty" skill:"github.com/eolinker/apinto/transcode.thrift.Contract" label:"契约资源"`
 }
 
 // Rule 规则

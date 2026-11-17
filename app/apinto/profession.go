@@ -274,6 +274,10 @@ func Profession() []*eosc.ProfessionConfig {
 			AppendLabels: nil,
 			Drivers: []*eosc.DriverConfig{
 				{
+					Id:   "eolinker.com:apinto:thrift_transcode",
+					Name: "thrift", Label: "Thrift契约", Desc: "不可变的Thrift契约资源",
+				},
+				{
 					Id:    "eolinker.com:apinto:protobuf_transcode",
 					Name:  "protobuf",
 					Label: "protobuf编码器",

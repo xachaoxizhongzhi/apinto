@@ -52,6 +52,9 @@ func (h *HttpRouter) Reset(conf interface{}, workers map[eosc.RequireId]eosc.IWo
 
 }
 func (h *HttpRouter) reset(cfg *Config, workers map[eosc.RequireId]eosc.IWorker) error {
+	if err := Check(cfg, workers); err != nil {
+		return err
+	}
 
 	methods := cfg.Method
 
